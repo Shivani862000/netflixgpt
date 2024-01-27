@@ -2,18 +2,18 @@ import { onAuthStateChanged, signOut } from "firebase/auth";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { LOGO, SUPPORTED_LANGUAGES } from "../utils/constants";
+import { LOGO, SUPPORTED_LANGUAGES, USER_AVATAR } from "../utils/constants";
 import { auth } from "../utils/firebase";
 import { addUser, removeUser } from "../utils/userSlice";
-// import { toggleGptSearchView } from "../utils/gptSlice";
-// import { changeLanguage } from "../utils/configSlice";
+import { toggleGptSearchView } from "../utils/gptSlice";
+import { changeLanguage } from "../utils/configSlice";
 
 const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((store) => store.user);
-  var showGptSearch =true
-  // const showGptSearch = useSelector((store) => store.gpt.showGptSearch);
+//  const showGptSearch =false
+  const showGptSearch = useSelector((store) => store.gpt.showGptSearch);
 
   const handleSignOut = () => {
     signOut(auth)
@@ -46,17 +46,16 @@ const Header = () => {
       }
     });
 
-    // Unsubscribe when the component unmounts
     return () => unsubscribe();
   }, [dispatch, navigate]);
 
   const handleGptSearchClick = () => {
     // Toggle GPT Search
-    // dispatch(toggleGptSearchView());
+    dispatch(toggleGptSearchView());
   };
 
   const handleLanguageChange = (e) => {
-    // dispatch(changeLanguage(e.target.value));
+   dispatch(changeLanguage(e.target.value));
   };
 
   return (
@@ -83,9 +82,9 @@ const Header = () => {
             {showGptSearch ? "Homepage" : "GPT Search"}
           </button>
           <img
-            className="hidden md:block w-12 h-12"
+            className="hidden md:block w-12 h-12 rounded  "
             alt="usericon"
-            src={user.photoURL}
+            src={user.photoURL || USER_AVATAR}
           />
           <button onClick={handleSignOut} className="font-bold text-white">
             (Sign Out)
