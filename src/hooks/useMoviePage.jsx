@@ -4,10 +4,8 @@ import { API_OPTIONS } from "../utils/constants";
 import {     addMovieTeaser} from "../utils/moviesSlice";
 
 const useMoviePage = (movieId) => {
-    const [allData , setAllData]= useState("")
   const dispatch = useDispatch();
 
-  const teaserVideo = useSelector((store) => store.movies.movieTeaser);
 
   const getMovieTeaser = async () => {
     const data = await fetch(
@@ -17,21 +15,18 @@ const useMoviePage = (movieId) => {
       API_OPTIONS
     );
     const json = await data.json();
-  
-
-    // console.log(json)
-    // console.log(movieId)
 
     const filterData = json.results.filter((video) => video.type === "Teaser");
-    const teaser = filterData.length ? filterData[0] : json.results[0];
-    // console.log(teaser)
-    setAllData(teaser)
+    const filtert = json.results.filter((video) => video.type === "Trailer");
+    const teaser = filterData.length ? filterData[0] : filtert[0];
+    // console.log(filterData)
+    // console.log(teaser + "te")
     dispatch(addMovieTeaser(teaser));
   };
   useEffect(() => {
-    ! teaserVideo && getMovieTeaser();
+     getMovieTeaser();
   }, []);
-return allData
+return 
 };
 
 export default useMoviePage;

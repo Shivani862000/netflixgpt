@@ -11,7 +11,7 @@ if (!movies) return;
    const { original_title, overview, id } = mainMovie;
   return (
     <div className="bg-black ">
-    <VideoTitle title={original_title} overview={overview} />
+    <VideoTitle title={original_title} overview={overview} id={id} />
     <VideoBackground movieId={id}/>
   </div>
   )

@@ -11,9 +11,8 @@ function MoviePage() {
   const filterMovieDetail = teaserData?.nowPlayingMovies?.filter(
     (moviesf) => moviesf.id == teaserid
   );
- const data= useMoviePage(teaserid);
-// console.log(data)
-const draftoverview ="Asha, a sharp-witted idealist, makes a wish so powerful that it is answered by a cosmic force – a little ball of boundless energy called Star. Together, Asha and Star confront a most formidable foe - the ruler of Rosas, King Magnifico - to save her community and prove that when the will of one courageous human connects with the magic of the stars, wondrous things can happen."
+  // console.log(filterMovieDetail)
+ useMoviePage(teaserid);
   return (
  <>
 
@@ -37,7 +36,7 @@ const draftoverview ="Asha, a sharp-witted idealist, makes a wish so powerful th
      className="w-full h-[60vh] "
      src={
        "https://www.youtube.com/embed/" +
-      teaserData?.movieTeaser?.key  +
+      teaserData?.movieTeaser?.key   +
        "?&autoplay=1&mute=1"
      }
      title="YouTube video player"
@@ -48,7 +47,7 @@ const draftoverview ="Asha, a sharp-witted idealist, makes a wish so powerful th
    {filterMovieDetail?.map((datam) => (
      <div key={datam?.id}>
        <h1 className="text-2xl lg:text-3xl font-bold text-red-600 ">{datam?.title}</h1>
-       <p className="text-sm lg:text-base my-3 text-white">{datam?.overview || draftoverview}</p>
+       <p className="text-sm lg:text-base my-3 text-white">{datam?.overview }</p>
        <p className="text-sm lg:text-base my-4 text-white">Language: {datam?.original_language}</p>
        <p className="text-sm lg:text-base my-4 text-white">Video Rating: {datam?.vote_average}</p>
        <p className="text-sm lg:text-base my-4 text-white">Release Date: {datam?.release_date}</p>

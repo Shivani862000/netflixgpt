@@ -1,7 +1,8 @@
 import React from 'react';
 import { FaPlay } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
-const VideoTitle = ({ title, overview }) => {
+const VideoTitle = ({ title, overview,id }) => {
   return (
 
 
@@ -11,13 +12,13 @@ const VideoTitle = ({ title, overview }) => {
 <h1 className="text-2xl md:text-4xl lg:text-6xl font-bold mb-4">{title}</h1>
 <p className="max-w-[850px] lg:block text-lg mb-6">{overview}</p>
         <div className="flex flex-row  items-center gap-3 ">
-          <button className="bg-white text-black py-2 md:py-4 px-4 md:px-8 text-lg md:text-xl rounded-lg hover:bg-opacity-80 flex items-center justify-center  md:mb-0">
+          <Link to={`/watch?v=${id}`} className="bg-white text-black py-2 md:py-4 px-4 md:px-8 text-lg md:text-xl rounded-lg hover:bg-opacity-80 flex items-center justify-center  md:mb-0">
             <FaPlay className="mr-2" />
             Play
-          </button>
-          <button className="bg-gray-500 text-white py-2 md:py-4 px-4 md:px-8 text-lg md:text-xl bg-opacity-50 rounded-lg ml-0 md:ml-4">
+          </Link>
+          <Link to={`/watch?v=${id}`} className="bg-gray-500 text-white py-2 md:py-4 px-4 md:px-8 text-lg md:text-xl bg-opacity-50 rounded-lg ml-0 md:ml-4">
             More Info
-          </button>
+          </Link>
         </div>
 </div>
 </div>
