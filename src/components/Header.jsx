@@ -1,7 +1,7 @@
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { LOGO, SUPPORTED_LANGUAGES, USER_AVATAR } from "../utils/constants";
 import { auth } from "../utils/firebase";
 import { addUser, removeUser } from "../utils/userSlice";
@@ -12,13 +12,11 @@ const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((store) => store.user);
-//  const showGptSearch =false
   const showGptSearch = useSelector((store) => store.gpt.showGptSearch);
 
   const handleSignOut = () => {
     signOut(auth)
       .then(() => {
-        // Optional: You can navigate or perform other actions after signing out
         navigate("/");
       })
       .catch((error) => {
@@ -50,17 +48,17 @@ const Header = () => {
   }, [dispatch, navigate]);
 
   const handleGptSearchClick = () => {
-    // Toggle GPT Search
     dispatch(toggleGptSearchView());
   };
 
   const handleLanguageChange = (e) => {
-   dispatch(changeLanguage(e.target.value));
+    dispatch(changeLanguage(e.target.value));
   };
 
   return (
-    <div className="absolute w-screen px-8 py-2 bg-gradient-to-b from-black z-10 flex flex-col md:flex-row justify-between">
-      <img className="w-44 mx-auto md:mx-0" src={LOGO} alt="logo" />
+    <div className="absolute w-screen px-4 md:px-8 py-2 bg-gradient-to-b from-black z-10 flex flex-col md:flex-row justify-between">
+      <img className="w-32 md:w-44 mx-auto md:mx-0" src={LOGO} alt="logo" />
+
       {user && (
         <div className="flex p-2 justify-between">
           {showGptSearch && (
@@ -75,20 +73,34 @@ const Header = () => {
               ))}
             </select>
           )}
+
+          <Link
+            className="py-2 px-4 mx-2 my-2 md:mx-4 text-white rounded-lg bg-slate-600"
+            to="/aboutProject"
+          >
+            About Project
+          </Link>
+
           <button
-            className="py-2 px-4 mx-4 my-2 bg-purple-800 text-white rounded-lg"
+            className="py-2 px-4 mx-2 my-2 md:mx-4 bg-slate-600 text-white rounded-lg"
             onClick={handleGptSearchClick}
           >
             {showGptSearch ? "Homepage" : "GPT Search"}
           </button>
-          <img
-            className="hidden md:block w-12 h-12 rounded  "
-            alt="usericon"
-            src={user.photoURL || USER_AVATAR}
-          />
-          <button onClick={handleSignOut} className="font-bold text-white">
-            (Sign Out)
-          </button>
+
+          <div className=" md:flex items-center">
+            <img
+              className="w-6 h-6 rounded"
+              alt="usericon"
+              src={user.photoURL || USER_AVATAR}
+            />
+            <button
+              onClick={handleSignOut}
+              className="font-bold text-white ml-2"
+            >
+              (Sign Out)
+            </button>
+          </div>
         </div>
       )}
     </div>

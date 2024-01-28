@@ -3,7 +3,6 @@ import MovieList from "./MovieList";
 
 const GptMovieSuggestions = () => {
   const { movieResults, movieNames } = useSelector((store) => store.gpt);
-  // console.log(movieNames)
   if (!movieNames) return null;
 
   return (
